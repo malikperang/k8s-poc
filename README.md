@@ -1,11 +1,13 @@
 # Kubernetes Proof of Concept with Vagrant.
 
+This is part of my series of learning and orchestrating k8s.
+
 ## VM Specifications
 
 - Ubuntu 18.04
 - 2 Core CPU's
 - 4GB RAM on Master node
-- 2GB Ram on Worker's node
+- 2GB RAM on Worker's node
 
 ## Tools Required
 
