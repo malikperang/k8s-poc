@@ -1,4 +1,4 @@
 #!/bin/bash
-vagrant halt k8s-master
-vagrant halt k8s-worker1
-vagrant halt k8s-worker2
+(cd ./svr-master1 && vagrant halt)
+(cd ./svr-worker1 && vagrant halt)
+(cd ./svr-worker2 && vagrant halt)
