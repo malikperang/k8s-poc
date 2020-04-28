@@ -75,6 +75,7 @@ $configMaster = <<-SCRIPT
 
     sudo sed -i "/^[^#]*PasswordAuthentication[[:space:]]no/c\PasswordAuthentication yes" /etc/ssh/sshd_config
     sudo service sshd restart
+    sudo reboot
 SCRIPT
 
 $configWorker = <<-SCRIPT
@@ -106,9 +107,6 @@ Vagrant.configure("2") do |config|
             else
                 config.vm.provision "shell", inline: $configWorker
             end
-
         end
-
     end
-
 end 
