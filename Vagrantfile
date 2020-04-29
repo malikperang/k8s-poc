@@ -7,7 +7,7 @@ servers = [
         :type => "master",
         :box => "bento/ubuntu-18.04",
         :eth1 => "192.168.30.30",
-        :mem => "4096",
+        :mem => "2048",
         :cpu => "2"
     },
     {
@@ -52,7 +52,7 @@ EOF"
     apt update
     apt install -y kubelet kubeadm kubectl
     apt-mark hold kubelet kubeadm kubectl
-    swapoff -a
+    sudo swapoff -a
     sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
     sudo systemctl restart kubelet
 SCRIPT
@@ -75,7 +75,6 @@ $configMaster = <<-SCRIPT
 
     sudo sed -i "/^[^#]*PasswordAuthentication[[:space:]]no/c\PasswordAuthentication yes" /etc/ssh/sshd_config
     sudo service sshd restart
-    sudo reboot
 SCRIPT
 
 $configWorker = <<-SCRIPT
