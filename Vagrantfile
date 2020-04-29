@@ -8,7 +8,9 @@ servers = [
         :box => "bento/ubuntu-18.04",
         :eth1 => "192.168.30.30",
         :mem => "2048",
-        :cpu => "2"
+        :cpu => "2",
+        :guess_port => "8001",
+        :host_port => "8001"
     },
     {
         :name => "k8s-worker1",
@@ -73,6 +75,8 @@ $configMaster = <<-SCRIPT
     kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
     kubectl taint nodes --all node-role.kubernetes.io/master-
 
+    #Install K8s dashboard
+    
     sudo sed -i "/^[^#]*PasswordAuthentication[[:space:]]no/c\PasswordAuthentication yes" /etc/ssh/sshd_config
     sudo service sshd restart
 SCRIPT
@@ -99,12 +103,13 @@ Vagrant.configure("2") do |config|
                 v.customize ["modifyvm", :id, "--cpus", opts[:cpu]]
             end
 
-            config.vm.provision "shell", inline: $configBox
+            # config.vm.provision "shell", inline: $configBox
 
             if opts[:type] == "master"
-                config.vm.provision "shell", inline: $configMaster
+                config.vm.network :forwarded_port, guest:opts[:guess_port], host:opts[:host_port]
+                # config.vm.provision "shell", inline: $configMaster
             else
-                config.vm.provision "shell", inline: $configWorker
+                # config.vm.provision "shell", inline: $configWorker
             end
         end
     end
